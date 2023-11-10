@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="body">
+            <h:form>
+                <p:toolbar style="margin-bottom: 10px; width: 69%; float:left">
+                    <f:facet name="left">
+                        <p:selectOneMenu id="unAutor" value="#{autorController.autor}" onchange="#{autorController.cargar_libros()} submit()">
+                            <f:selectItems value="#{autorController.itemsAvailableSelectMany}"/> <!--acabado en s, porque sera algo para una lista-->
+                        </p:selectOneMenu>
+                    </f:facet>
+                </p:toolbar> 
+                
+            </h:form>
+            
+            
+            <h:form>
+                <p:dataTable var="libro" value="#{autorController.listalibros}" style="width: 40%;float: left"><!--en la vista los valores que tengan serán                                                               los mismos que los del controlador-->
+                    <p:column headerText="Cód." sortBy="#{libro.codLibro}" width="50" style="text-align: center">
+                        <h:outputText value="#{libro.codLibro}"/>
+                    </p:column>
+                    <p:column headerText="Titulo" sortBy="#{libro.nomLibro}">
+                        <h:outputText value="#{libro.nomLibro}"/>
+                    </p:column>
+                    <p:column headerText="Portada" style="text-align: center">
+                        <h:graphicImage library="portadas" name="#{libro}" height="60px"/>    
+                    </p:column>
+                </p:dataTable>
+                
+                
+                <p:dataTable var="autorPremio" value="#{autorController.listaPremios}" style="width: 40%;float: left">
+                    <p:column headerText="Premio">
+                        <h:outputText value="#{autorPremio.premio.nomPremio}"/>
+                    </p:column>
+                    <p:column headerText="País">
+                        <h:graphicImage library="banderas" name="#{autorPremio.premio.codPais.bandera}" height="45px"/>
+                    </p:column>
+                </p:dataTable>
+                
+                <p:dock position="bottom">
+                    <p:menuitem value="Listado" icon="/resources/iconos/listado.png" url="List.xhtml"/>
+                    <p:menuitem value="Inicio" icon="/resources/iconos/home.ico" outcome="/index" url="../../index.xhtml"/>
+                </p:dock>                
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
